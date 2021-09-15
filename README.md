@@ -2,7 +2,7 @@
 
 Kinda updated to 1.18_experimental-snapshot-7
 
-Didn't see the 1.17 branch.
+Didn't see the 1.17 branch, so this is based of an older version!
 I made only the most necessary changes to use it while testing the snapshot w/ a few friends.
 
 Bugs:
