@@ -8,6 +8,7 @@ I made only the most necessary changes to use it while testing the snapshot w/ a
 Bugs:
 - Sorting of chests via button only executes the "sort" command (anyway it sorts the chest c:)
 - Icon in the inventory is broken (bcs of gradle settings)
+- Playerheads won't be sorted correctly
 
 
 
