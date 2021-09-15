@@ -21,8 +21,8 @@ public class InventorySortPacket {
             SortCases.SortType sortType = SortCases.SortType.values()[packetByteBuf.readInt()];
             packetContext.getTaskQueue().execute(() -> {
                 PlayerEntity player = packetContext.getPlayer();
-                if (playerInv || !((SortableContainer) player.currentScreenHandler).hasSlots()) {
-                    InventoryHelper.sortInv(player.inventory, 9, 27, sortType);
+                if (playerInv) {
+                    InventoryHelper.sortInv(player.getInventory(), 9, 27, sortType);
                 } else {
                     Inventory inv = ((SortableContainer) player.currentScreenHandler).getInventory();
                     if (inv != null)
@@ -34,6 +34,12 @@ public class InventorySortPacket {
 
     @Environment(EnvType.CLIENT)
     public static void sendSortPacket(boolean playerInv) {
+		if (!playerInv)
+		{
+			MinecraftClient.getInstance().player.sendChatMessage("/sort");
+			//MinecraftClient.getInstance().player.sendChatMessage("sort");
+			return;
+		}
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBoolean(playerInv);
         buf.writeInt(InventorySorterModClient.getConfig().sortType.ordinal());

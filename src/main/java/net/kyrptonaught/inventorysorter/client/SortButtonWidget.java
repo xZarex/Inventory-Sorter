@@ -12,6 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import org.apache.commons.lang3.StringUtils;
+import net.minecraft.client.render.DiffuseLighting;
 import org.lwjgl.glfw.GLFW;
 
 @Environment(EnvType.CLIENT)
@@ -35,15 +36,23 @@ public class SortButtonWidget extends TexturedButtonWidget {
 
     @Override
     public void renderButton(MatrixStack matrixStack, int int_1, int int_2, float float_1) {
-        RenderSystem.pushMatrix();
+       // RenderSystem.pushMatrix(); //umbenannt
+		matrixStack.push();
         MinecraftClient minecraftClient_1 = MinecraftClient.getInstance();
         minecraftClient_1.getTextureManager().bindTexture(texture);
-        RenderSystem.scalef(.5f, .5f, 1);
-        RenderSystem.translatef(this.x, this.y, 0);
+        //RenderSystem.scalef(.5f, .5f, 1); //umbenannt
+        //RenderSystem.translatef(this.x, this.y, 0); //umbenannt
+		
+		matrixStack.scale(.5f, .5f, 1);
+        matrixStack.translate(this.x, this.y, 0);
+		
+		
         drawTexture(matrixStack, this.x, this.y, 0, this.isHovered() ? 19 : 0, 20, 18, 20, 37);
-        this.renderToolTip(matrixStack, int_1, int_2);
-        RenderSystem.disableLighting();
-        RenderSystem.popMatrix();
+        //this.drawMouseoverTooltip(matrixStack, int_1, int_2);
+        //RenderSystem.disableLighting(); //umbenannt
+		DiffuseLighting.method_34742();
+        //RenderSystem.popMatrix(); //umbenannt
+		matrixStack.pop();
     }
 
     @Override
@@ -63,9 +72,9 @@ public class SortButtonWidget extends TexturedButtonWidget {
         return true;
     }
 
-    @Override
-    public void renderToolTip(MatrixStack matrixStack, int x, int y) {
-        if (InventorySorterModClient.getConfig().displayTooltip && this.isHovered())
-            MinecraftClient.getInstance().currentScreen.renderTooltip(matrixStack, new LiteralText("Sort by: " + StringUtils.capitalize(InventorySorterModClient.getConfig().sortType.toString().toLowerCase())), x, y);
-    }
+    //@Override
+    //public void drawMouseoverTooltip(MatrixStack matrixStack, int x, int y) {
+    //    if (InventorySorterModClient.getConfig().displayTooltip && this.isHovered())
+    //        MinecraftClient.getInstance().currentScreen.drawMouseoverTooltip(matrixStack, new LiteralText("Sort by:", x, y));
+    //}
 }
